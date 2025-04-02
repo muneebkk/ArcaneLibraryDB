@@ -15,6 +15,7 @@ CREATE TABLE LibraryCopies (
     FOREIGN KEY (productID) REFERENCES LibraryItems(productID)
 );
 
+
 CREATE TABLE Users (
     userID INTEGER PRIMARY KEY,
     name TEXT NOT NULL,

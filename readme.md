@@ -1,108 +1,128 @@
-# Library Database Management System
+# 📚 Arcane Library Database Application
 
-This project implements a library database system for a database management course mini-project.
+Welcome to the Arcane Library — a terminal-based application built with **SQLite** and **Python** to simulate a real-world library system. Users can borrow and return items, register for events, volunteer, donate books, and more.
 
-## Project Structure
+---
 
-The project consists of the following files:
+## 🚀 Features (Step 7)
 
-1. `library_schema.sql` - SQL schema for creating all database tables and triggers
-2. `populate_tables.sql` - SQL script to populate the database with sample data
-3. `library_setup_db.py` - Python script to set up the database initially
-4. `library_application.py` - Python application for interacting with the database
-5. `library.db` - The SQLite database file (created by running the setup script)
+| Action                     | Description                                                 |
+|---------------------------|-------------------------------------------------------------|
+| Find an item              | Search library items by title or author                     |
+| Borrow an item            | Borrow a specific copy of a library item                    |
+| Return a borrowed item    | Return a borrowed item by Borrow ID                        |
+| Donate an item            | Suggest a future item to be added to the library            |
+| Find an event             | Search library events by keyword                            |
+| Register for an event     | Register a user for a library event                         |
+| Volunteer for the library | Register a staff member to volunteer at an event            |
+| Ask a librarian           | Send a question to the library staff (placeholder only)     |
 
-## Setup Instructions
+---
 
-### Prerequisites
+## 🗂️ File Structure
 
-- Python 3.6 or higher
-- SQLite3
+| File                     | Purpose                                |
+|--------------------------|----------------------------------------|
+| `library_schema.sql`     | SQL schema for all tables              |
+| `populate_tables.sql`    | Sample data for all tables             |
+| `library_setup_db.py`    | Creates and populates the database     |
+| `library_application.py` | Menu-based terminal application        |
+| `library.db`             | SQLite database (auto-generated)       |
 
-### Setup Steps
+---
 
-1. **Set up the database**:
-   ```bash
-   python library_setup_db.py
-   ```
-   This will create a new `library.db` file with all the necessary tables and sample data.
+## ⚙️ Setup Instructions
 
-2. **Run the application**:
-   ```bash
-   python library_application.py
-   ```
+1. **Install Python (3.6 or newer)** – no extra packages required.
+2. **Open a terminal** and navigate to the project folder.
+3. **Build and populate the database:**
 
-## Features
+```bash
+python library_setup_db.py
+```
 
-The library management application supports the following features as required:
+✅ This creates `library.db` using the schema and fills it with sample data.
 
-1. **Find an item in the library**
-   - Search for items by title, author, genre, or type
+---
 
-2. **Borrow an item from the library**
-   - Process borrowing transactions with automatic due dates
-   - Check item availability and member status
+## 🧪 Run the Application
 
-3. **Return a borrowed item**
-   - Process returns with automatic fine calculation for late returns
-   - View currently borrowed items
+```bash
+python library_application.py
+```
 
-4. **Donate an item to the library**
-   - Record donations with metadata
-   - Track acquisition status
+You'll see this menu:
 
-5. **Find an event in the library**
-   - Search for events with various filters
-   - View event details
+```
+📚 LIBRARY SYSTEM MENU
+1. Find an item
+2. Borrow an item
+3. Return an item
+4. Donate an item
+5. Find an event
+6. Register for an event
+7. Volunteer for an event
+8. Ask a librarian
+9. Exit
+```
 
-6. **Register for an event in the library**
-   - View available events
-   - Process event registrations with capacity tracking
+---
 
-7. **Volunteer for the library**
-   - Submit volunteer applications
-   - Track volunteer information
+## 📝 How to Use Each Scenario
 
-8. **Ask for help from a librarian**
-   - Submit help requests
-   - Track request status
+### 1️⃣ Find an Item
+- Choose option 1
+- Enter a **title or author keyword**
+- Example: `1984` or `Rowling`
+- You'll see matching items, including their `itemID` and availability
 
-## Database Schema
+### 2️⃣ Borrow an Item
+- Choose option 2
+- Enter your **User ID** (1–10)
+- Enter an **Item ID** shown from option 1
+- ✅ Only items marked "Available" can be borrowed
 
-The database includes the following main tables:
+### 3️⃣ Return an Item
+- Choose option 3
+- Enter your **Borrow ID**
+- ✅ Return date and any overdue fines will be recorded automatically
 
-- **LibraryItems** - Books, magazines, DVDs, etc.
-- **LibraryMembers** - Library member information
-- **Borrowing** - Borrowing transactions
-- **Events** - Library events
-- **EventRegistration** - Event registrations
-- **LibraryRooms** - Physical spaces in the library
-- **LibraryStaff** - Staff information
-- **Volunteers** - Library volunteers
-- **HelpRequests** - Member requests for assistance
-- **DonationsAcquisitions** - Donated items and acquisition requests
+### 4️⃣ Donate an Item
+- Choose option 4
+- Enter:
+  - Product ID: e.g. `F011`
+  - Type: `Print Book`, `CD`, etc.
+  - Author: Any name
+  - Year: e.g. `2025`
+  - Genre: e.g. `Mystery`
+- ✅ Item will be saved to the `FutureItems` table
 
-## Sample Data
+### 5️⃣ Find an Event
+- Choose option 5
+- Enter a keyword like: `Book`, `Tech`, `Kids`
+- ✅ You’ll get a list of upcoming events matching that term
 
-The database is pre-populated with sample data including:
-- 15 library items of various types
-- 12 library members
-- 10 events
-- 12 borrowing records
-- And more sample data for other tables
+### 6️⃣ Register for an Event
+- Choose option 6
+- Enter **Event ID** and your **User ID**
+- ✅ You'll be added to the `Attends` table
 
-## Testing
+### 7️⃣ Volunteer for an Event
+- Choose option 7
+- Enter **Event ID** and **Employee ID**
+- ✅ You'll be added to the `Volunteering` table
 
-For testing purposes, you can use the following sample IDs:
-- Member IDs: 1-12
-- Item IDs: 1-15
-- Event IDs: 1-10
+### 8️⃣ Ask a Librarian
+- Choose option 8
+- Type any question (e.g., “Where are the science journals?”)
+- 📬 The system will simulate sending it (no storage yet)
 
-## Notes on BCNF Compliance
+---
 
-The database schema has been designed to comply with Boyce-Codd Normal Form (BCNF):
-- Each table has a clear primary key
-- All non-key attributes are fully dependent on the primary key
-- There are no transitive dependencies
-- Foreign key constraints ensure referential integrity
-- Trigger constraints maintain data consistency
+## 📌 Notes
+
+- Re-running `library_setup_db.py` will delete your database and reload the original sample data. Only run it once.
+- Use SQLite Viewer or CLI to view the raw tables (e.g. `sqlite3 library.db` + `SELECT * FROM FutureItems;`)
+
+---
+
