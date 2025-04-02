@@ -4,11 +4,11 @@ def find_item(title):
     with sqlite3.connect("library.db") as conn:
         cur = conn.cursor()
         cur.execute("""
-            SELECT LI.productID, LI.type, LI.author, LI.publicationYear, LI.genre, LC.itemID, LC.availability
-            FROM LibraryItems LI
-            JOIN LibraryCopies LC ON LI.productID = LC.productID
-            WHERE LI.productID LIKE ? OR LI.author LIKE ?
-        """, (f"%{title}%", f"%{title}%"))
+    SELECT LI.productID, LI.title, LI.type, LI.author, LI.publicationYear, LI.genre, LC.itemID, LC.availability
+    FROM LibraryItems LI
+    JOIN LibraryCopies LC ON LI.productID = LC.productID
+    WHERE LI.title LIKE ? OR LI.author LIKE ?
+""", (f"%{title}%", f"%{title}%"))
         return cur.fetchall()
 
 def borrow_item(user_id, item_id):
@@ -92,7 +92,8 @@ def main():
                 for row in results:
                     print(f"📘 ProductID: {row[0]}, ItemID: {row[5]}, Availability: {row[6]}")
             else:
-                print("No items found.")
+                print("\n🚫 ERROR: No matching items found in the library.")
+                print("🔎 Tip: Try a different keyword (title or author)\n")
 
         elif choice == "2":
             user_id = int(input("Enter your User ID: "))
