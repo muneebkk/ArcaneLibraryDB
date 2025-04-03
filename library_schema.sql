@@ -103,7 +103,7 @@ FOR EACH ROW
 BEGIN
     UPDATE LibraryCopies
     SET availability = 'Borrowed'
-    WHERE itemID = NEW.itemID;
+    WHERE itemID = NEW.itemID
 END;
 
 CREATE TRIGGER UpdatetoAvailable

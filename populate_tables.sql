@@ -3,7 +3,7 @@
 -- LibraryItems
 INSERT INTO LibraryItems (productID, name, type, author, publicationYear, genre, FutureItem) VALUES
 ('P001', '1984', 'Print Book', 'George Orwell', 1949, 'Dystopian', 'No'),
-('P002', 'Harry Potter and the Philosopher''s Stone', 'Print Book', 'J.K. Rowling', 1997, 'Fantasy', 'No'),
+('P002', 'Harry Potter and the Philosophers Stone', 'Print Book', 'J.K. Rowling', 1997, 'Fantasy', 'No'),
 ('P003', 'National Geographic March 2022', 'Magazine', 'National Geographic Society', 2022, 'Nature', 'No'),
 ('P004', 'Abbey Road', 'CD', 'The Beatles', 1969, 'Music', 'No'),
 ('P005', 'Nature Vol. 586', 'Journal', 'Nature Publishing Group', 2020, 'Science', 'No'),
