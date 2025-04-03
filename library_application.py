@@ -17,9 +17,8 @@ def borrow_item(user_id, item_id):
         cur.execute("SELECT availability FROM LibraryCopies WHERE itemID = ?", (item_id,))
         result = cur.fetchone()
         if result and result[0] == "Available":
-            cur.execute("UPDATE LibraryCopies SET availability = 'Borrowed' WHERE itemID = ?", (item_id,))
             cur.execute("INSERT INTO Borrows (itemID, userID, borrowDate, dueDate) VALUES (?, ?, DATE('now'), DATE('now', '+14 days'))", (item_id, user_id))
-            conn.commit()
+            conn.commit()    # the update to the items status i.e. borrowed now is handled by the trigger
             print("✅ Item borrowed.")
         else:
             print("❌ Item is not available or doesn't exist.")
@@ -33,9 +32,7 @@ def return_item(borrow_id):
             print("❌ Invalid borrow ID.")
             return
         item_id, due = row
-        cur.execute("UPDATE LibraryCopies SET availability = 'Available' WHERE itemID = ?", (item_id,))
         cur.execute("UPDATE Borrows SET returnedDate = DATE('now') WHERE borrowID = ?", (borrow_id,))
-        cur.execute("UPDATE Borrows SET fine = MAX(julianday('now') - julianday(?), 0) * 0.5 WHERE borrowID = ?", (due, borrow_id))
         conn.commit()
         print("✅ Item returned.")
 

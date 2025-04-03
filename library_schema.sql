@@ -4,11 +4,11 @@ CREATE TABLE LibraryItems(
     productID TEXT PRIMARY KEY,
     name TEXT NOT NULL,
     type TEXT NOT NULL,
-    author TEXT NOT NLL,
+    author TEXT NOT NULL,
     publicationYear INTEGER,    -- might change to publicationDate, so DATE type can be used
     genre TEXT NOT NULL,
     FutureItem TEXT,            -- simply 'Yes' or 'No' indicating if it is a future item
-    CHECK (publicationYear BETWEEN 1000 AND 2025)
+    CHECK (publicationYear BETWEEN 1000 AND 2025),
     CHECK (FutureItem IN ('Yes','No'))
     );
 
@@ -16,7 +16,7 @@ CREATE TABLE LibraryCopies(
     itemID INTEGER PRIMARY KEY,
     productID TEXT NOT NULL,
     availability TEXT NOT NULL,
-    CHECK (availability IN ('Available','Borrowed'),
+    CHECK (availability IN ('Available','Borrowed')),
     FOREIGN KEY (productID) REFERENCES LibraryItems(productID)
     );
 
@@ -39,8 +39,8 @@ CREATE TABLE Borrows(
     fine REAL DEFAULT 0.0,  -- if no fine, by default a fine of 0.0
     FOREIGN KEY (itemID) REFERENCES LibraryCopies(itemID),
     FOREIGN KEY (userID) REFERENCES Users(userID),
-    CHECK ( borrowDate <= dueDate )
-    CHECK ( returnedDate IS NULL OR borrowDate <= returnedDate) -- either not returned (which obv will be case initially) or return date is after borrow date
+    CHECK ( borrowDate <= dueDate ),
+    CHECK ( returnedDate IS NULL OR borrowDate <= returnedDate), -- either not returned (which obv will be case initially) or return date is after borrow date
     CHECK ( fine >= 0.0 )
     );
 
@@ -57,7 +57,7 @@ CREATE TABLE LibraryRooms (
     roomID INTEGER PRIMARY KEY,
     name TEXT NOT NULL,
     capacity INTEGER,
-    roomType TEXT NOT NULL,
+    type TEXT NOT NULL,
     CHECK ( capacity > 0 )
 );
 
@@ -90,29 +90,29 @@ CREATE TABLE Attending (
 );
 
 CREATE TABLE Volunteering (
-    staffIF INTEGER NOT NULL,
+    staffID INTEGER NOT NULL,
     eventID INTEGER NOT NULL,
     PRIMARY KEY (staffID, eventID),
     FOREIGN KEY (staffID) REFERENCES Personnel(staffID),
     FOREIGN KEY (eventID) REFERENCES Events(eventID)
 );
 
-CREATE TRIGGER UpdateBorrowed
+CREATE TRIGGER UpdatetoBorrowed
 AFTER INSERT ON Borrows
 FOR EACH ROW
 BEGIN
     UPDATE LibraryCopies
     SET availability = 'Borrowed'
-    WHERE itemID = NEW.itemID
+    WHERE itemID = NEW.itemID;
 END;
 
-CREATE TRIGGER UpdateAvailable
+CREATE TRIGGER UpdatetoAvailable
 AFTER UPDATE OF returnedDate ON Borrows
 FOR EACH ROW
 BEGIN
     UPDATE LibraryCopies
     SET availability = 'Available'
-    WHERE itemID = NEW.itemID
+    WHERE itemID = NEW.itemID;
 END;
 
 CREATE TRIGGER PreventUnavailable
@@ -123,7 +123,7 @@ BEGIN
     WHERE EXISTS (
         SELECT 1
         FROM LibraryCopies
-        WHERE itemID = NEW.itemID AND availability == "Borrowed"
+        WHERE itemID = NEW.itemID AND availability = "Borrowed"
     );
 END;
 
@@ -161,7 +161,7 @@ FOR EACH ROW
 BEGIN 
     UPDATE Borrows
     SET fine = MAX( (julianday(NEW.returnedDate) - julianday(dueDate)) * 5, 0)  -- checks if returnDate - dueDate is positive i.e dueDate has passsed, and multiplies those extra number of days by daily fine amount - $5
-    WHERE borrowID = NEW.borrowID
+    WHERE borrowID = NEW.borrowID;
 END;
 
 

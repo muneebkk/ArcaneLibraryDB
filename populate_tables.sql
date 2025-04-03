@@ -12,25 +12,25 @@ INSERT INTO LibraryItems (productID, name, type, author, publicationYear, genre,
 ('P008', 'The Fellowship of the Ring', 'Print Book', 'J.R.R. Tolkien', 1954, 'Fantasy', 'No'),
 ('P009', 'TIME Magazine July 2023', 'Magazine', 'TIME', 2023, 'News', 'No'),
 ('P010', 'IEEE Transactions', 'Journal', 'IEEE', 2021, 'Engineering', 'No'),
-('F001', 'Print Book', 'New Author', 2025, 'Sci-Fi'),
-('F002', 'CD', 'Emerging Artist', 2024, 'Pop', 'Yes'),
-('F003', 'Magazine', 'World News', 2024, 'Politics', 'Yes'),
-('F004', 'Journal', 'ACM', 2025, 'Computing', 'Yes'),
-('F005', 'Print Book', 'Indie Author', 2024, 'Mystery', 'Yes'),
-('F006', 'Print Book', 'Self Publisher', 2024, 'Self-Help', 'Yes'),
-('F007', 'Journal', 'Science Group', 2023, 'Health', 'Yes'),
-('F008', 'CD', 'Local Band', 2024, 'Rock', 'Yes'),
-('F009', 'Print Book', 'First Time Writer', 2025, 'Adventure', 'Yes'),
-('F010', 'Magazine', 'Tech Review', 2025, 'Technology', 'Yes');
+('F001', 'Item 1', 'Print Book', 'New Author', 2025, 'Sci-Fi', 'Yes'),
+('F002', 'Item 2', 'CD', 'Emerging Artist', 2024, 'Pop', 'Yes'),
+('F003', 'Item 3', 'Magazine', 'World News', 2024, 'Politics', 'Yes'),
+('F004', 'Item 4', 'Journal', 'ACM', 2025, 'Computing', 'Yes'),
+('F005', 'Item 5', 'Print Book', 'Indie Author', 2024, 'Mystery', 'Yes'),
+('F006', 'Item 6', 'Print Book', 'Self Publisher', 2024, 'Self-Help', 'Yes'),
+('F007', 'Item 7', 'Journal', 'Science Group', 2023, 'Health', 'Yes'),
+('F008', 'Item 8', 'CD', 'Local Band', 2024, 'Rock', 'Yes'),
+('F009', 'Item 9', 'Print Book', 'First Time Writer', 2025, 'Adventure', 'Yes'),
+('F010', 'Item 10', 'Magazine', 'Tech Review', 2025, 'Technology', 'Yes');
 
 -- LibraryCopies
 INSERT INTO LibraryCopies (itemID, productID, availability) VALUES
 (1, 'P001', 'Available'),
-(2, 'P002', 'Borrowed'),
+(2, 'P002', 'Available'),
 (3, 'P003', 'Available'),
 (4, 'P004', 'Available'),
 (5, 'P005', 'Available'),
-(6, 'P006', 'Borrowed'),
+(6, 'P006', 'Available'),
 (7, 'P007', 'Available'),
 (8, 'P008', 'Available'),
 (9, 'P009', 'Available'),
@@ -94,7 +94,7 @@ INSERT INTO LibraryRooms (roomID, name, type, capacity) VALUES
 -- (10, 'Clerk J', '65 Topaz ', '2023-07-15');
 
 -- Personnel
-INSERT INTO Personnel (staffID, name, address, employeeSince) VALUES
+INSERT INTO Personnel (staffID, name, address, hireDate) VALUES
 (1, 'John Miller', '12 Quartz Ave', '2019-01-01'),
 (2, 'Emily Thompson', '87 Sapphire St', '2020-06-12'),
 (3, 'Michael Anderson', '44 Goldmine Rd', '2021-09-17'),
@@ -120,11 +120,11 @@ INSERT INTO Events (eventID, name, type, date, audience, roomID) VALUES
 (10, 'Magazine Expo', 'Exhibition', '2024-05-15', 'Everyone', 9);
 
 -- Attends
-INSERT INTO Attends (eventID, userID) VALUES
+INSERT INTO Attending (eventID, userID) VALUES
 (1, 1), (1, 2), (2, 3), (2, 4), (3, 5),
 (3, 6), (4, 7), (5, 8), (6, 9), (7, 10);
 
 -- Volunteering
-INSERT INTO Volunteering (eventID, employeeID) VALUES
+INSERT INTO Volunteering (eventID, staffID) VALUES
 (1, 1), (2, 2), (3, 3), (4, 4), (5, 5),
 (6, 6), (7, 7), (8, 8), (9, 9), (10, 10);
