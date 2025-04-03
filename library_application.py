@@ -1,14 +1,14 @@
 import sqlite3
 
-def find_item(title):
+def find_item(name):
     with sqlite3.connect("library.db") as conn:
         cur = conn.cursor()
         cur.execute("""
-    SELECT LI.productID, LI.title, LI.type, LI.author, LI.publicationYear, LI.genre, LC.itemID, LC.availability
+    SELECT LI.productID, LI.name, LI.type, LI.author, LI.publicationYear, LI.genre, LC.itemID, LC.availability
     FROM LibraryItems LI
     JOIN LibraryCopies LC ON LI.productID = LC.productID
-    WHERE LI.title LIKE ? OR LI.author LIKE ?
-""", (f"%{title}%", f"%{title}%"))
+    WHERE LI.name LIKE ? OR LI.author LIKE ?
+""", (f"%{name}%", f"%{name}%"))
         return cur.fetchall()
 
 def borrow_item(user_id, item_id):
@@ -83,14 +83,19 @@ def main():
         choice = input("Choose an option (1-9): ")
 
         if choice == "1":
-            title = input("Enter a title or author to search: ")
-            results = find_item(title)
+            name = input("Enter a name or author to search: ")
+            results = find_item(name)
             if results:
                 for row in results:
-                    print(f"📘 ProductID: {row[0]}, ItemID: {row[5]}, Availability: {row[6]}")
+                    if len(results) == 1:
+                        print("\n Found a match!")
+                    else:
+                        print("\n Found",len(results), "matches!")
+
+                    print(f"📘 ProductID: {row[0]}\nName: {row[1]}\nItemID: {row[6]}\nAvailability: {row[7]}")
             else:
                 print("\n🚫 ERROR: No matching items found in the library.")
-                print("🔎 Tip: Try a different keyword (title or author)\n")
+                print("🔎 Tip: Try a different keyword (name or author)\n")
 
         elif choice == "2":
             user_id = int(input("Enter your User ID: "))
